@@ -1,6 +1,9 @@
 #include "headers.h"
+#include "Process.h"
+#include "comparePriority.h"
+#ifndef NON_PREEMPTIVE_PRIORITY_SCHEDULER_H
+#define NON_PREEMPTIVE_PRIORITY_SCHEDULER_H
 
-using namespace std;
 class NonPreemptivePriorityScheduler {
 private:
     vector<Process>& processes;
@@ -10,12 +13,12 @@ private:
 public:
 
     NonPreemptivePriorityScheduler(vector<Process>& processes) : processes(processes) {}
-     int gettim() {
+     int getTim() {
         return tim;
     }
     
-    void schedule(bool live) {
-        NonPreemptivePriorityScheduler::tim = 0;
+    void schedule(bool & live) {
+        tim = 0;
         priority_queue<Process, vector<Process>, ComparePriority> readyQueue;
         int totalWaitingTime = 0;
         int totalTurnaroundTime = 0;
@@ -82,3 +85,4 @@ public:
 
 
 };
+#endif // NON_PREEMPTIVE_PRIORITY_SCHEDULER_H
