@@ -1,0 +1,24 @@
+# ninja log v6
+1264	3436	7662008330728011	CMakeFiles/CPU.dir/main.cpp.obj	c62839fc102df0fb
+55	276	7662026862652860	CPU_autogen/timestamp	df7341a63419ab30
+278	3106	7662026864874661	CMakeFiles/CPU.dir/mainwindow.cpp.obj	f82d76de83ebe49b
+55	276	7662026862652860	CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
+1260	3414	7662008330686888	CMakeFiles/CPU.dir/CPU_autogen/mocs_compilation.cpp.obj	4bc21e693ba77162
+55	276	7662026862652860	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
+55	276	7662026862652860	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/timestamp	df7341a63419ab30
+3106	3249	7662026893156030	CPU.exe	8c1302d955d39237
+343	1517	7662018623778576	CMakeFiles/CPU.dir/NonPreemptivePriorityScheduler.cpp.obj	35cdac60b1269d1c
+334	1093	7661204415697963	CMakeFiles/CPU.dir/Process.cpp.obj	ba16bb9b59141a1f
+347	1559	7662018623818107	CMakeFiles/CPU.dir/PreemptivePriorityScheduler.cpp.obj	dd2edb6fce7d4bce
+90	345	7662028645834984	CPU_autogen/timestamp	df7341a63419ab30
+90	345	7662028645834984	CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
+90	345	7662028645834984	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/timestamp	df7341a63419ab30
+90	345	7662028645834984	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
+347	3152	7662028648403480	CMakeFiles/CPU.dir/mainwindow.cpp.obj	f82d76de83ebe49b
+3153	3287	7662028676444727	CPU.exe	8c1302d955d39237
+64	320	7662030397058062	CPU_autogen/timestamp	df7341a63419ab30
+64	320	7662030397058062	CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
+64	320	7662030397058062	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/timestamp	df7341a63419ab30
+64	320	7662030397058062	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
+322	3144	7662030399639162	CMakeFiles/CPU.dir/mainwindow.cpp.obj	f82d76de83ebe49b
+3145	3278	7662030427863010	CPU.exe	8c1302d955d39237
