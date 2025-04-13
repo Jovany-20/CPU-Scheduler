@@ -1,8 +1,9 @@
 #include "PreemptivePriorityScheduler.h"
-
+#include "GanttChartWindow.h"
 
 PreemptivePriorityScheduler::PreemptivePriorityScheduler(vector<Process>& processes)
     : processes(processes), tim(0) {
+
 }
 
 int PreemptivePriorityScheduler::getTim() const {
@@ -13,15 +14,11 @@ void PreemptivePriorityScheduler::incrementTim() {
     tim++;
 }
 
-void PreemptivePriorityScheduler::printGanttChart(int pid, int currentTime) {
-    if (pid == -1) {
-        cout << "Idle";
-    }
-    else {
-        cout << "(P" << pid << "," << currentTime << ")-";
-    }
-    cout.flush();
-}
+// void PreemptivePriorityScheduler::printGanttChart(int pid, int currentTime) {
+//     if (ganttChartWindow) {
+//         ganttChartWindow->addBlock(pid, currentTime);
+//     }
+// }
 
 void PreemptivePriorityScheduler::schedule(bool& live) {
     int totalWaitingTime = 0;
@@ -54,7 +51,7 @@ void PreemptivePriorityScheduler::schedule(bool& live) {
             int currentIndex = eligibleIndices[0];
             Process& currentProcess = processes[currentIndex];
 
-            printGanttChart(currentProcess.getPid(), currentTime);
+            emit updateGanttChart(currentProcess.getPid(), currentTime);
             currentProcess.decrement(1);
 
             if (currentProcess.getRemainingTime() == 0) {
@@ -71,7 +68,7 @@ void PreemptivePriorityScheduler::schedule(bool& live) {
             incrementTim();
         }
         else {
-            printGanttChart(-1, currentTime);
+            emit updateGanttChart(-1, currentTime);
             incrementTim();
             if (live) {
                 this_thread::sleep_for(chrono::seconds(1));
@@ -79,9 +76,10 @@ void PreemptivePriorityScheduler::schedule(bool& live) {
         }
     }
 
-    cout << "\nAverage Waiting Time: "
-         << static_cast<double>(totalWaitingTime) / processes.size()
-         << "\nAverage Turnaround Time: "
-         << static_cast<double>(totalTurnaroundTime) / processes.size()
-         << endl;
+    double avgWaitingTime = static_cast<double>(totalWaitingTime) / processes.size();
+    double avgTurnaroundTime = static_cast<double>(totalTurnaroundTime) / processes.size();
+    emit statsCalculated(avgWaitingTime, avgTurnaroundTime);
+    cout << "\nAverage Waiting Time: " << avgWaitingTime << endl;
+    cout << "Average Turnaround Time: " << avgTurnaroundTime << endl;
+    emit finished();
 }

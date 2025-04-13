@@ -269,6 +269,12 @@
 			null
 		],
 		[
+			"C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/GanttChartWindow.h",
+			"MU",
+			"EWIEGA46WW/moc_GanttChartWindow.cpp",
+			null
+		],
+		[
 			"C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/NonPreemptivePriorityScheduler.h",
 			"MU",
 			"EWIEGA46WW/moc_NonPreemptivePriorityScheduler.cpp",
@@ -284,6 +290,12 @@
 			"C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/Process.h",
 			"MU",
 			"EWIEGA46WW/moc_Process.cpp",
+			null
+		],
+		[
+			"C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/SchedulerWorker.h",
+			"MU",
+			"EWIEGA46WW/moc_SchedulerWorker.cpp",
 			null
 		],
 		[
@@ -368,6 +380,11 @@
 	"SOURCES" : 
 	[
 		[
+			"C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/GanttChartWindow.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/NonPreemptivePriorityScheduler.cpp",
 			"MU",
 			null
@@ -379,6 +396,11 @@
 		],
 		[
 			"C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/Process.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/SchedulerWorker.cpp",
 			"MU",
 			null
 		],

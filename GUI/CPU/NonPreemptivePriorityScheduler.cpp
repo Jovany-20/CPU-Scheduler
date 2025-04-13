@@ -3,22 +3,17 @@
 
 NonPreemptivePriorityScheduler::NonPreemptivePriorityScheduler(vector<Process>& processes)
     : processes(processes), tim(0) {
-}
 
+}
 int NonPreemptivePriorityScheduler::getTim() const {
     return tim;
 }
 
-void NonPreemptivePriorityScheduler::printGanttChart(int pid, int currentTime) {
-    if (pid == -1) {
-        cout << "Idle";
-    }
-    else {
-        cout << "(P" << pid << "," << currentTime << ")";
-        cout << "-";
-    }
-    cout.flush();
-}
+// void NonPreemptivePriorityScheduler::printGanttChart(int pid, int currentTime) {
+//     if (ganttChartWindow) {
+//         ganttChartWindow->addBlock(pid, currentTime);
+//     }
+// }
 
 void NonPreemptivePriorityScheduler::schedule(bool& live) {
     tim = 0;
@@ -42,7 +37,8 @@ void NonPreemptivePriorityScheduler::schedule(bool& live) {
             readyQueue.pop();
 
             for (int i = 0; i < currentProcess.getRemainingTime(); ++i) {
-                printGanttChart(currentProcess.getPid(), tim++);
+               emit updateGanttChart(currentProcess.getPid(), tim++);
+                //addBlock(currentProcess.getPid(),tim++);
                 if (live) {
                     this_thread::sleep_for(chrono::seconds(1));
                 }
@@ -54,7 +50,7 @@ void NonPreemptivePriorityScheduler::schedule(bool& live) {
             totalTurnaroundTime += currentProcess.calcTurnaroundTime();
         }
         else {
-            printGanttChart(-1, tim);
+             emit updateGanttChart(-1, tim);
             if (live) {
                 this_thread::sleep_for(chrono::seconds(1));
             }
@@ -64,7 +60,8 @@ void NonPreemptivePriorityScheduler::schedule(bool& live) {
 
     double avgWaitingTime = static_cast<double>(totalWaitingTime) / processes.size();
     double avgTurnaroundTime = static_cast<double>(totalTurnaroundTime) / processes.size();
-
+    emit statsCalculated(avgWaitingTime, avgTurnaroundTime);
     cout << "\nAverage Waiting Time: " << avgWaitingTime << endl;
     cout << "Average Turnaround Time: " << avgTurnaroundTime << endl;
+    emit finished();
 }

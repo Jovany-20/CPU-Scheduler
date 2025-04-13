@@ -3,6 +3,7 @@
 #include "process.h"
 #include "PreemptivePriorityScheduler.h"
 #include "NonPreemptivePriorityScheduler.h"
+#include "GanttChartWindow.h"
 #include <QComboBox>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -16,6 +17,9 @@
 #include <QTimer>
 #include <QIntValidator>
 #include <vector>
+
+
+
 
 class SchedulerThread : public QThread {
 public:
@@ -32,6 +36,7 @@ private:
 
 class PreemptiveWindow : public QWidget {
 public:
+    //GanttChartWindow* ganttChartWindow;
     PreemptiveWindow(QWidget* parent = nullptr) : QWidget(parent), processCount(1), live(false) {
         setWindowTitle("Preemptive Priority Window");
 
@@ -70,7 +75,10 @@ public:
         timer = new QTimer(this);
         connect(timer, &QTimer::timeout, this, &PreemptiveWindow::updateArrivalTime);
     }
-
+    void handleGanttChartUpdate(int pid, int currentTime) {
+        // Update the Gantt chart here
+        ganttChartWindow->addBlock(pid, currentTime);
+    }
 private slots:
     void addProcess() {
         int burstTime = burstTimeEdit->text().toInt();
@@ -95,22 +103,42 @@ private slots:
         live = checked;
         endLiveButton->setEnabled(live);
     }
-
+signals:
+    void updateGanttChart(int pid, int currentTime);
     void startScheduling() {
         if (!live) {
             clearPage();
-            scheduler = new PreemptivePriorityScheduler(processes);
-            scheduler->schedule(live);
+
+
         } else {
             liveCheckBox->hide();
-            scheduler = new PreemptivePriorityScheduler(processes);
+
             timer->start(800);
 
-            SchedulerThread* thread = new SchedulerThread([this]() {
-                scheduler->schedule(live);
-            });
-            thread->start();
         }
+        ganttChartWindow = new GanttChartWindow();
+        ganttChartWindow->show();
+
+        QThread* thread = new QThread;
+        // Note: Instead of declaring a local scheduler, assign to your member variable if needed.
+        scheduler = new PreemptivePriorityScheduler(processes);
+        scheduler->moveToThread(thread);
+
+        connect(thread, &QThread::started, [this]() {
+            connect(scheduler, &PreemptivePriorityScheduler::updateGanttChart,
+                    this, &PreemptiveWindow::handleGanttChartUpdate, Qt::QueuedConnection);
+            // Connect the statsCalculated signal to the GanttChartWindow's setStats slot.
+            connect(scheduler, &PreemptivePriorityScheduler::statsCalculated,
+                    ganttChartWindow, &GanttChartWindow::setStats, Qt::QueuedConnection);
+            scheduler->schedule(live);
+        });
+
+        connect(scheduler, &PreemptivePriorityScheduler::finished, thread, &QThread::quit);
+        connect(scheduler, &PreemptivePriorityScheduler::finished, scheduler, &PreemptivePriorityScheduler::deleteLater);
+        connect(thread, &QThread::finished, thread, &QThread::deleteLater);
+
+        thread->start();
+
     }
 
     void updateArrivalTime() {
@@ -129,13 +157,14 @@ private slots:
     }
 
     void clearPage() {
-        // Remove all widgets from the layout
         QLayoutItem* item;
         while ((item = mainLayout->takeAt(0)) != nullptr) {
             delete item->widget();
             delete item;
         }
     }
+
+
 
 private:
     QVBoxLayout* mainLayout;
@@ -152,10 +181,12 @@ private:
     int minArrivalTime;
     QTimer* timer;
     PreemptivePriorityScheduler* scheduler;
+    GanttChartWindow* ganttChartWindow;
 };
 
 class NonPreemptiveWindow : public QWidget {
 public:
+    //GanttChartWindow* ganttChartWindow;
     NonPreemptiveWindow(QWidget* parent = nullptr) : QWidget(parent), processCount(1), live(false) {
         setWindowTitle("NonPreemptive Priority Window");
 
@@ -194,7 +225,10 @@ public:
         timer = new QTimer(this);
         connect(timer, &QTimer::timeout, this, &NonPreemptiveWindow::updateArrivalTime);
     }
-
+    void handleGanttChartUpdate(int pid, int currentTime) {
+        // Update the Gantt chart here
+    ganttChartWindow->addBlock(pid, currentTime);
+    }
 private slots:
     void addProcess() {
         int burstTime = burstTimeEdit->text().toInt();
@@ -223,18 +257,37 @@ private slots:
     void startScheduling() {
         if (!live) {
             clearPage();
-            scheduler = new NonPreemptivePriorityScheduler(processes);
-            scheduler->schedule(live);
+
+
+
         } else {
             liveCheckBox->hide();
-            scheduler = new NonPreemptivePriorityScheduler(processes);
-            timer->start(800);
 
-            SchedulerThread* thread = new SchedulerThread([this]() {
-                scheduler->schedule(live);
-            });
-            thread->start();
+            timer->start(800);
         }
+        ganttChartWindow = new GanttChartWindow();
+        ganttChartWindow->show();
+
+        QThread* thread = new QThread;
+        // Note: Instead of declaring a local scheduler, assign to your member variable if needed.
+        scheduler = new NonPreemptivePriorityScheduler(processes);
+        scheduler->moveToThread(thread);
+
+        connect(thread, &QThread::started, [this]() {
+            connect(scheduler, &NonPreemptivePriorityScheduler::updateGanttChart,
+                    this, &NonPreemptiveWindow::handleGanttChartUpdate, Qt::QueuedConnection);
+            // Connect the statsCalculated signal to the GanttChartWindow's setStats slot.
+            connect(scheduler, &NonPreemptivePriorityScheduler::statsCalculated,
+                    ganttChartWindow, &GanttChartWindow::setStats, Qt::QueuedConnection);
+            scheduler->schedule(live);
+        });
+
+        connect(scheduler, &NonPreemptivePriorityScheduler::finished, thread, &QThread::quit);
+        connect(scheduler, &NonPreemptivePriorityScheduler::finished, scheduler, &NonPreemptivePriorityScheduler::deleteLater);
+        connect(thread, &QThread::finished, thread, &QThread::deleteLater);
+
+        thread->start();
+
     }
 
     void updateArrivalTime() {
@@ -253,13 +306,14 @@ private slots:
     }
 
     void clearPage() {
-        // Remove all widgets from the layout
         QLayoutItem* item;
         while ((item = mainLayout->takeAt(0)) != nullptr) {
             delete item->widget();
             delete item;
         }
     }
+
+
 
 private:
     QVBoxLayout* mainLayout;
@@ -276,6 +330,7 @@ private:
     int minArrivalTime;
     QTimer* timer;
     NonPreemptivePriorityScheduler* scheduler;
+    GanttChartWindow* ganttChartWindow;
 };
 
 MainWindow::MainWindow(QWidget *parent)
@@ -300,10 +355,18 @@ void MainWindow::openNewWindow()
     QString selectedOption = ui->comboBox->currentText();
 
     if (selectedOption == "Preemptive Priority") {
+        // GanttChartWindow* g = new GanttChartWindow();
+        // g->show();
+        // g->addBlock(0,1);
+        // g->addBlock(0,2);
+        // g->addBlock(0,2);
+        // g->addBlock(0,2);
+        // g->addBlock(0,2);
         PreemptiveWindow* newWindow = new PreemptiveWindow();
         newWindow->show();
     } else if (selectedOption == "NonPreemptive Priority") {
-        NonPreemptiveWindow* newWindow = new NonPreemptiveWindow();
+         NonPreemptiveWindow* newWindow = new NonPreemptiveWindow();
         newWindow->show();
     }
 }
+

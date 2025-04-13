@@ -23,6 +23,11 @@ qt_add_executable(CPU
     NonPreemptivePriorityScheduler.cpp
     PreemptivePriorityScheduler.cpp
     Process.cpp
+    GanttChartWindow.h
+    GanttChartWindow.cpp
+    SchedulerWorker.h
+    SchedulerWorker.h
+    SchedulerWorker.cpp
 )
 
 target_link_libraries(CPU
