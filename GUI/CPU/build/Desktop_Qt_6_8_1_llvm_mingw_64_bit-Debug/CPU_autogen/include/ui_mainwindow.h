@@ -33,19 +33,19 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(800, 600);
+        MainWindow->resize(412, 236);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         comboBox = new QComboBox(centralwidget);
         comboBox->setObjectName("comboBox");
-        comboBox->setGeometry(QRect(170, 100, 181, 21));
+        comboBox->setGeometry(QRect(110, 80, 181, 21));
         pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName("pushButton");
-        pushButton->setGeometry(QRect(220, 240, 80, 18));
+        pushButton->setGeometry(QRect(160, 120, 80, 18));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 17));
+        menubar->setGeometry(QRect(0, 0, 412, 17));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");

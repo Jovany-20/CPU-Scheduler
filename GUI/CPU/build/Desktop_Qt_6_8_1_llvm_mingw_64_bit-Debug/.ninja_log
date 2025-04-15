@@ -1,14 +1,28 @@
 # ninja log v6
-91	440	7662830765340420	CPU_autogen/timestamp	df7341a63419ab30
 1264	3436	7662008330728011	CMakeFiles/CPU.dir/main.cpp.obj	c62839fc102df0fb
-91	440	7662830765340420	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
-91	440	7662830765340420	CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
-1458	4282	7662830343934106	CMakeFiles/CPU.dir/CPU_autogen/mocs_compilation.cpp.obj	4bc21e693ba77162
-442	3144	7662830768841766	CMakeFiles/CPU.dir/mainwindow.cpp.obj	f82d76de83ebe49b
-1478	3898	7662830344136303	CMakeFiles/CPU.dir/GanttChartWindow.cpp.obj	3b163b367d0c0f85
-91	440	7662830765340420	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/timestamp	df7341a63419ab30
-3145	3287	7662830795865476	CPU.exe	ec22d500d7e7c9a7
-1468	4195	7662830344023983	CMakeFiles/CPU.dir/NonPreemptivePriorityScheduler.cpp.obj	35cdac60b1269d1c
+120	1484	7664411486513446	CPU_autogen/timestamp	df7341a63419ab30
+1493	4564	7664411487956848	CMakeFiles/CPU.dir/mainwindow.cpp.obj	f82d76de83ebe49b
+120	1484	7664411486513446	CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
+1488	4283	7664411487904893	CMakeFiles/CPU.dir/CPU_autogen/mocs_compilation.cpp.obj	4bc21e693ba77162
+120	1484	7664411486513446	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
+2511	6003	7664402184971779	CMakeFiles/CPU.dir/GanttChartWindow.cpp.obj	3b163b367d0c0f85
+120	1484	7664411486513446	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/timestamp	df7341a63419ab30
+4564	4700	7664411518663962	CPU.exe	ec22d500d7e7c9a7
+1499	4157	7664411488016861	CMakeFiles/CPU.dir/NonPreemptivePriorityScheduler.cpp.obj	35cdac60b1269d1c
 334	1093	7661204415697963	CMakeFiles/CPU.dir/Process.cpp.obj	ba16bb9b59141a1f
-1472	4186	7662830344068989	CMakeFiles/CPU.dir/PreemptivePriorityScheduler.cpp.obj	dd2edb6fce7d4bce
-1485	4127	7662830344205886	CMakeFiles/CPU.dir/SchedulerWorker.cpp.obj	94355270cc19b613
+1504	4211	7664411488062476	CMakeFiles/CPU.dir/PreemptivePriorityScheduler.cpp.obj	dd2edb6fce7d4bce
+1509	4082	7664411488115552	CMakeFiles/CPU.dir/SchedulerWorker.cpp.obj	94355270cc19b613
+98	445	7664412569546217	CPU_autogen/timestamp	df7341a63419ab30
+98	445	7664412569546217	CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
+98	445	7664412569546217	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/timestamp	df7341a63419ab30
+98	445	7664412569546217	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
+452	2988	7664412573083661	CMakeFiles/CPU.dir/NonPreemptivePriorityScheduler.cpp.obj	35cdac60b1269d1c
+448	3294	7664412573041709	CMakeFiles/CPU.dir/mainwindow.cpp.obj	f82d76de83ebe49b
+3294	3432	7664412601505622	CPU.exe	ec22d500d7e7c9a7
+95	461	7664413606648201	CPU_autogen/timestamp	df7341a63419ab30
+95	461	7664413606648201	CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
+95	461	7664413606648201	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/timestamp	df7341a63419ab30
+95	461	7664413606648201	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Documents/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Debug/CPU_autogen/mocs_compilation.cpp	df7341a63419ab30
+467	2989	7664413610365098	CMakeFiles/CPU.dir/NonPreemptivePriorityScheduler.cpp.obj	35cdac60b1269d1c
+463	3346	7664413610325767	CMakeFiles/CPU.dir/mainwindow.cpp.obj	f82d76de83ebe49b
+3347	3484	7664413639165893	CPU.exe	ec22d500d7e7c9a7

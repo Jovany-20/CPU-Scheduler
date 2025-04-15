@@ -5,6 +5,7 @@ C:/Users/vanyj/OneDrive\ -\ Faculty\ of\ Engineering\ Ain\ Shams\ University/Doc
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/q20memory.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/q20type_traits.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/q23utility.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qabstractitemmodel.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qalgorithms.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qanystringview.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qarraydata.h \
@@ -47,11 +48,13 @@ C:/Users/vanyj/OneDrive\ -\ Faculty\ of\ Engineering\ Ain\ Shams\ University/Doc
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qhashfunctions.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qiodevice.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qiodevicebase.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qitemselectionmodel.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qiterable.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qiterator.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qlatin1stringview.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qline.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qlist.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qlocale.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qlogging.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qmalloc.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qmap.h \
@@ -72,6 +75,7 @@ C:/Users/vanyj/OneDrive\ -\ Faculty\ of\ Engineering\ Ain\ Shams\ University/Doc
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qprocessordetection.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qrect.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qrefcount.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qregularexpression.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qscopedpointer.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qscopeguard.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtCore/qset.h \
@@ -147,22 +151,36 @@ C:/Users/vanyj/OneDrive\ -\ Faculty\ of\ Engineering\ Ain\ Shams\ University/Doc
   C:/Qt/6.8.1/llvm-mingw_64/include/QtGui/qtguiexports.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtGui/qtguiglobal.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtGui/qtransform.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtGui/qvalidator.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtGui/qwindowdefs_win.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/QHBoxLayout \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/QLabel \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/QScrollArea \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/QTableWidget \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/QVBoxLayout \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/QWidget \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qabstractitemview.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qabstractscrollarea.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qabstractslider.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qabstractspinbox.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qboxlayout.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qframe.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qgridlayout.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qlabel.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qlayout.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qlayoutitem.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qrubberband.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qscrollarea.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qsizepolicy.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qslider.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qstyle.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qstyleoption.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qtabbar.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qtableview.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qtablewidget.h \
+  C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qtabwidget.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qtwidgets-config.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qtwidgetsexports.h \
   C:/Qt/6.8.1/llvm-mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -855,6 +873,7 @@ C:/Users/vanyj/OneDrive\ -\ Faculty\ of\ Engineering\ Ain\ Shams\ University/Doc
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/array \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/atomic \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/bit \
+  C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/bitset \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/cassert \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/cctype \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/cerrno \
@@ -881,6 +900,8 @@ C:/Users/vanyj/OneDrive\ -\ Faculty\ of\ Engineering\ Ain\ Shams\ University/Doc
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/initializer_list \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/ios \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/iosfwd \
+  C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/iostream \
+  C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/istream \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/iterator \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/limits \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/limits.h \
@@ -894,6 +915,7 @@ C:/Users/vanyj/OneDrive\ -\ Faculty\ of\ Engineering\ Ain\ Shams\ University/Doc
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/new \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/numeric \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/optional \
+  C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/ostream \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/ratio \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/stdbool.h \
   C:/Qt/Tools/llvm-mingw1706_64/include/c++/v1/stddef.h \
@@ -920,4 +942,5 @@ C:/Users/vanyj/OneDrive\ -\ Faculty\ of\ Engineering\ Ain\ Shams\ University/Doc
   C:/Qt/Tools/llvm-mingw1706_64/include/crtdefs.h \
   C:/Qt/Tools/llvm-mingw1706_64/include/sdks/_mingw_ddk.h \
   C:/Qt/Tools/llvm-mingw1706_64/lib/clang/17/include/stdarg.h \
-  C:/Qt/Tools/llvm-mingw1706_64/lib/clang/17/include/vadefs.h
+  C:/Qt/Tools/llvm-mingw1706_64/lib/clang/17/include/vadefs.h \
+  C:/Users/vanyj/OneDrive\ -\ Faculty\ of\ Engineering\ Ain\ Shams\ University/Documents/CPU/Process.h

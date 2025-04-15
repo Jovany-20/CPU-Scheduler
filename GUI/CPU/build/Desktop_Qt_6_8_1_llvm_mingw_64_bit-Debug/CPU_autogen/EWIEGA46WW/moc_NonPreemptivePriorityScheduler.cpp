@@ -46,7 +46,9 @@ static constexpr auto qt_meta_stringdata_ZN30NonPreemptivePrioritySchedulerE = Q
     "updateGanttChart",
     "pid",
     "currentTime",
-    "finished"
+    "finished",
+    "setPaused",
+    "pause"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -58,7 +60,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN30NonPreemptivePrioritySchedulerE[]
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -66,14 +68,20 @@ Q_CONSTINIT static const uint qt_meta_data_ZN30NonPreemptivePrioritySchedulerE[]
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    2,   32,    2, 0x06,    1 /* Public */,
-       5,    2,   37,    2, 0x06,    4 /* Public */,
-       8,    0,   42,    2, 0x06,    7 /* Public */,
+       1,    2,   38,    2, 0x06,    1 /* Public */,
+       5,    2,   43,    2, 0x06,    4 /* Public */,
+       8,    0,   48,    2, 0x06,    7 /* Public */,
+
+ // slots: name, argc, parameters, tag, flags, initial metatype offsets
+       9,    1,   49,    2, 0x0a,    8 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Double, QMetaType::Double,    3,    4,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    6,    7,
     QMetaType::Void,
+
+ // slots: parameters
+    QMetaType::Void, QMetaType::Bool,   10,
 
        0        // eod
 };
@@ -96,7 +104,10 @@ Q_CONSTINIT const QMetaObject NonPreemptivePriorityScheduler::staticMetaObject =
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'finished'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'setPaused'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>
     >,
     nullptr
 } };
@@ -109,6 +120,7 @@ void NonPreemptivePriorityScheduler::qt_static_metacall(QObject *_o, QMetaObject
         case 0: _t->statsCalculated((*reinterpret_cast< std::add_pointer_t<double>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<double>>(_a[2]))); break;
         case 1: _t->updateGanttChart((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
         case 2: _t->finished(); break;
+        case 3: _t->setPaused((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
         default: ;
         }
     }
@@ -157,14 +169,14 @@ int NonPreemptivePriorityScheduler::qt_metacall(QMetaObject::Call _c, int _id, v
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 4)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }

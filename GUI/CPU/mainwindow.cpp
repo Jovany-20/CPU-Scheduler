@@ -21,23 +21,11 @@
 
 
 
-class SchedulerThread : public QThread {
-public:
-    SchedulerThread(std::function<void()> func) : func(func) {}
-
-protected:
-    void run() override {
-        func();
-    }
-
-private:
-    std::function<void()> func;
-};
 
 class PreemptiveWindow : public QWidget {
 public:
-    //GanttChartWindow* ganttChartWindow;
-    PreemptiveWindow(QWidget* parent = nullptr) : QWidget(parent), processCount(1), live(false) {
+    PreemptiveWindow(QWidget* parent = nullptr)
+        : QWidget(parent), processCount(1), live(false), isPaused(false), scheduler(nullptr) {
         setWindowTitle("Preemptive Priority Window");
 
         mainLayout = new QVBoxLayout(this);
@@ -52,7 +40,7 @@ public:
         formLayout->addRow("Burst Time:", burstTimeEdit);
         formLayout->addRow("Priority:", priorityEdit);
         formLayout->addRow("Arrival Time:", arrivalTimeEdit);
-
+        minArrivalTime=0;
         QPushButton* addButton = new QPushButton("Add Process");
         connect(addButton, &QPushButton::clicked, this, &PreemptiveWindow::addProcess);
 
@@ -66,6 +54,9 @@ public:
         endLiveButton->setEnabled(false);
         connect(endLiveButton, &QPushButton::clicked, this, &PreemptiveWindow::endLive);
 
+        // Initially, the pause/resume button is not created.
+        pauseResumeButton = nullptr;
+
         mainLayout->addLayout(formLayout);
         mainLayout->addWidget(addButton);
         mainLayout->addWidget(liveCheckBox);
@@ -75,20 +66,41 @@ public:
         timer = new QTimer(this);
         connect(timer, &QTimer::timeout, this, &PreemptiveWindow::updateArrivalTime);
     }
+
+    // This function is used as a slot to handle Gantt chart updates.
     void handleGanttChartUpdate(int pid, int currentTime) {
-        // Update the Gantt chart here
-        ganttChartWindow->addBlock(pid, currentTime);
+        ganttChartWindow->addBlock(pid, currentTime,processes);
     }
+
 private slots:
     void addProcess() {
-        int burstTime = burstTimeEdit->text().toInt();
-        int priority = priorityEdit->text().toInt();
-        int arrivalTime = arrivalTimeEdit->text().toInt();
+        QString arrivalText = arrivalTimeEdit->text();
+        QString burstText = burstTimeEdit->text();
+        QString priorityText = priorityEdit->text();
 
-        if (arrivalTime < minArrivalTime) {
+        int burstTime = burstText.toInt();
+        int priority = priorityText.toInt();
+        int arrivalTime = arrivalText.toInt();
+
+        bool hasError = false;
+
+        if (arrivalText.isEmpty() || arrivalTime < minArrivalTime) {
             arrivalTimeEdit->setText(QString::number(minArrivalTime));
-            return;
+            hasError = true;
         }
+
+        if (priorityText.isEmpty() || priority < 1) {
+            priorityEdit->setText("1");
+            hasError = true;
+        }
+
+        if (burstText.isEmpty() || burstTime < 1) {
+            burstTimeEdit->setText("1");
+            hasError = true;
+        }
+
+        if (hasError)
+            return; // Return now so the user can correct the entries
 
         processes.push_back(Process(processCount, burstTime, priority, arrivalTime));
         processCount++;
@@ -103,31 +115,64 @@ private slots:
         live = checked;
         endLiveButton->setEnabled(live);
     }
+
+    // New slot that toggles pause/resume.
+    void togglePause() {
+        if (!isPaused) {
+            // Pause the scheduler and timer
+            isPaused = true;
+            pauseResumeButton->setText("Resume");
+
+            // Signal the scheduler to pause.
+            if (scheduler) {
+                scheduler->setPaused(true);
+                QMetaObject::invokeMethod(scheduler, "setPaused", Qt::QueuedConnection,
+                                          Q_ARG(bool, true));
+            }
+            timer->stop();
+        } else {
+            // Resume the scheduler and timer.
+            isPaused = false;
+            pauseResumeButton->setText("Pause");
+
+            if (scheduler) {
+                scheduler->setPaused(false);
+                QMetaObject::invokeMethod(scheduler, "setPaused", Qt::QueuedConnection,
+                                          Q_ARG(bool, false));
+            }
+            timer->start(800);
+        }
+    }
+
 signals:
     void updateGanttChart(int pid, int currentTime);
     void startScheduling() {
         if (!live) {
             clearPage();
-
-
         } else {
             liveCheckBox->hide();
-
+            // Hide the start button so the user can’t click it again.
+            startButton->hide();
             timer->start(800);
-
         }
         ganttChartWindow = new GanttChartWindow();
         ganttChartWindow->show();
 
+        // (If live, create the pause/resume button as before.)
+        if (live) {
+            pauseResumeButton = new QPushButton("Pause", this);
+            mainLayout->addWidget(pauseResumeButton);
+            connect(pauseResumeButton, &QPushButton::clicked, this, &PreemptiveWindow::togglePause);
+        }
+
         QThread* thread = new QThread;
-        // Note: Instead of declaring a local scheduler, assign to your member variable if needed.
         scheduler = new PreemptivePriorityScheduler(processes);
         scheduler->moveToThread(thread);
 
         connect(thread, &QThread::started, [this]() {
             connect(scheduler, &PreemptivePriorityScheduler::updateGanttChart,
                     this, &PreemptiveWindow::handleGanttChartUpdate, Qt::QueuedConnection);
-            // Connect the statsCalculated signal to the GanttChartWindow's setStats slot.
+            // Connect the statsCalculated signal if you use it
             connect(scheduler, &PreemptivePriorityScheduler::statsCalculated,
                     ganttChartWindow, &GanttChartWindow::setStats, Qt::QueuedConnection);
             scheduler->schedule(live);
@@ -138,7 +183,6 @@ signals:
         connect(thread, &QThread::finished, thread, &QThread::deleteLater);
 
         thread->start();
-
     }
 
     void updateArrivalTime() {
@@ -154,17 +198,22 @@ signals:
         endLiveButton->setEnabled(false);
         timer->stop();
         clearPage();
+        if (scheduler) {
+            scheduler->setPaused(false);
+            QMetaObject::invokeMethod(scheduler, "setPaused", Qt::QueuedConnection,
+                                      Q_ARG(bool, false));
+        }
     }
 
     void clearPage() {
         QLayoutItem* item;
         while ((item = mainLayout->takeAt(0)) != nullptr) {
-            delete item->widget();
+            if(item->widget()) {
+                delete item->widget();
+            }
             delete item;
         }
     }
-
-
 
 private:
     QVBoxLayout* mainLayout;
@@ -177,7 +226,10 @@ private:
     QCheckBox* liveCheckBox;
     QPushButton* startButton;
     QPushButton* endLiveButton;
+    // New pause/resume button.
+    QPushButton* pauseResumeButton;
     bool live;
+    bool isPaused;   // flag indicating whether we are paused
     int minArrivalTime;
     QTimer* timer;
     PreemptivePriorityScheduler* scheduler;
@@ -186,8 +238,8 @@ private:
 
 class NonPreemptiveWindow : public QWidget {
 public:
-    //GanttChartWindow* ganttChartWindow;
-    NonPreemptiveWindow(QWidget* parent = nullptr) : QWidget(parent), processCount(1), live(false) {
+    NonPreemptiveWindow(QWidget* parent = nullptr)
+        : QWidget(parent), processCount(1), live(false), isPaused(false), scheduler(nullptr) {
         setWindowTitle("NonPreemptive Priority Window");
 
         mainLayout = new QVBoxLayout(this);
@@ -202,7 +254,7 @@ public:
         formLayout->addRow("Burst Time:", burstTimeEdit);
         formLayout->addRow("Priority:", priorityEdit);
         formLayout->addRow("Arrival Time:", arrivalTimeEdit);
-
+        minArrivalTime=0;
         QPushButton* addButton = new QPushButton("Add Process");
         connect(addButton, &QPushButton::clicked, this, &NonPreemptiveWindow::addProcess);
 
@@ -216,6 +268,9 @@ public:
         endLiveButton->setEnabled(false);
         connect(endLiveButton, &QPushButton::clicked, this, &NonPreemptiveWindow::endLive);
 
+        // Initially, the pause/resume button is not created.
+        pauseResumeButton = nullptr;
+
         mainLayout->addLayout(formLayout);
         mainLayout->addWidget(addButton);
         mainLayout->addWidget(liveCheckBox);
@@ -225,20 +280,41 @@ public:
         timer = new QTimer(this);
         connect(timer, &QTimer::timeout, this, &NonPreemptiveWindow::updateArrivalTime);
     }
+
+    // Slot to update the Gantt chart.
     void handleGanttChartUpdate(int pid, int currentTime) {
-        // Update the Gantt chart here
-    ganttChartWindow->addBlock(pid, currentTime);
+        ganttChartWindow->addBlock(pid, currentTime,processes);
     }
+
 private slots:
     void addProcess() {
-        int burstTime = burstTimeEdit->text().toInt();
-        int priority = priorityEdit->text().toInt();
-        int arrivalTime = arrivalTimeEdit->text().toInt();
+        QString arrivalText = arrivalTimeEdit->text();
+        QString burstText = burstTimeEdit->text();
+        QString priorityText = priorityEdit->text();
 
-        if (arrivalTime < minArrivalTime) {
+        int burstTime = burstText.toInt();
+        int priority = priorityText.toInt();
+        int arrivalTime = arrivalText.toInt();
+
+        bool hasError = false;
+
+        if (arrivalText.isEmpty() || arrivalTime < minArrivalTime) {
             arrivalTimeEdit->setText(QString::number(minArrivalTime));
-            return;
+            hasError = true;
         }
+
+        if (priorityText.isEmpty() || priority < 1) {
+            priorityEdit->setText("1");
+            hasError = true;
+        }
+
+        if (burstText.isEmpty() || burstTime < 1) {
+            burstTimeEdit->setText("1");
+            hasError = true;
+        }
+
+        if (hasError)
+            return;  // Return now so the user can correct the entries
 
         processes.push_back(Process(processCount, burstTime, priority, arrivalTime));
         processCount++;
@@ -254,29 +330,60 @@ private slots:
         endLiveButton->setEnabled(live);
     }
 
+    // Slot to toggle pause/resume functionality.
+    void togglePause() {
+        if (!isPaused) {
+            // Pause the scheduler and stop the timer.
+            isPaused = true;
+            pauseResumeButton->setText("Resume");
+            if (scheduler) {
+                scheduler->setPaused(true);
+                QMetaObject::invokeMethod(scheduler, "setPaused", Qt::QueuedConnection,
+                                          Q_ARG(bool, true));
+            }
+            timer->stop();
+        } else {
+            // Resume the scheduler and restart the timer.
+            isPaused = false;
+            pauseResumeButton->setText("Pause");
+            if (scheduler) {
+                scheduler->setPaused(false);
+                QMetaObject::invokeMethod(scheduler, "setPaused", Qt::QueuedConnection,
+                                          Q_ARG(bool, false));
+            }
+            timer->start(800);
+        }
+    }
+
+signals:
+    void updateGanttChart(int pid, int currentTime);
     void startScheduling() {
         if (!live) {
             clearPage();
-
-
-
         } else {
             liveCheckBox->hide();
-
+            // Hide the start button so it won't be clicked again.
+            startButton->hide();
             timer->start(800);
         }
         ganttChartWindow = new GanttChartWindow();
         ganttChartWindow->show();
 
+        // If live mode is enabled, create and add the pause/resume button.
+        if (live) {
+            pauseResumeButton = new QPushButton("Pause", this);
+            mainLayout->addWidget(pauseResumeButton);
+            connect(pauseResumeButton, &QPushButton::clicked, this, &NonPreemptiveWindow::togglePause);
+        }
+
         QThread* thread = new QThread;
-        // Note: Instead of declaring a local scheduler, assign to your member variable if needed.
+        // Assign the scheduler as a member variable.
         scheduler = new NonPreemptivePriorityScheduler(processes);
         scheduler->moveToThread(thread);
 
         connect(thread, &QThread::started, [this]() {
             connect(scheduler, &NonPreemptivePriorityScheduler::updateGanttChart,
                     this, &NonPreemptiveWindow::handleGanttChartUpdate, Qt::QueuedConnection);
-            // Connect the statsCalculated signal to the GanttChartWindow's setStats slot.
             connect(scheduler, &NonPreemptivePriorityScheduler::statsCalculated,
                     ganttChartWindow, &GanttChartWindow::setStats, Qt::QueuedConnection);
             scheduler->schedule(live);
@@ -287,7 +394,6 @@ private slots:
         connect(thread, &QThread::finished, thread, &QThread::deleteLater);
 
         thread->start();
-
     }
 
     void updateArrivalTime() {
@@ -303,17 +409,22 @@ private slots:
         endLiveButton->setEnabled(false);
         timer->stop();
         clearPage();
+        if (scheduler) {
+            scheduler->setPaused(false);
+            QMetaObject::invokeMethod(scheduler, "setPaused", Qt::QueuedConnection,
+                                      Q_ARG(bool, false));
+        }
     }
 
     void clearPage() {
         QLayoutItem* item;
         while ((item = mainLayout->takeAt(0)) != nullptr) {
-            delete item->widget();
+            if (item->widget()) {
+                delete item->widget();
+            }
             delete item;
         }
     }
-
-
 
 private:
     QVBoxLayout* mainLayout;
@@ -331,6 +442,9 @@ private:
     QTimer* timer;
     NonPreemptivePriorityScheduler* scheduler;
     GanttChartWindow* ganttChartWindow;
+    // Pause/resume button and flag.
+    QPushButton* pauseResumeButton;
+    bool isPaused;
 };
 
 MainWindow::MainWindow(QWidget *parent)
