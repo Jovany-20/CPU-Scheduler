@@ -7,7 +7,8 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
 
-qt_standard_project_setup()
+# If qt_standard_project_setup() is not recognized, you can remove it or replace it with standard setup commands
+# qt_standard_project_setup()
 
 qt_add_executable(CPU
     WIN32 MACOSX_BUNDLE
@@ -26,14 +27,17 @@ qt_add_executable(CPU
     GanttChartWindow.h
     GanttChartWindow.cpp
     SchedulerWorker.h
-    SchedulerWorker.h
     SchedulerWorker.cpp
+    FCFS_Scheduler.cpp
+    FCFS_Scheduler.h
+    RoundRobinScheduler.h
+    RoundRobinScheduler.cpp
 )
 
 target_link_libraries(CPU
     PRIVATE
-        Qt::Core
-        Qt::Widgets
+        Qt6::Core
+        Qt6::Widgets
 )
 
 include(GNUInstallDirs)

@@ -4,6 +4,8 @@
 #include "PreemptivePriorityScheduler.h"
 #include "NonPreemptivePriorityScheduler.h"
 #include "GanttChartWindow.h"
+#include "FCFS_Scheduler.h"
+#include "RoundRobinScheduler.h"
 #include <QComboBox>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -17,6 +19,7 @@
 #include <QTimer>
 #include <QIntValidator>
 #include <vector>
+
 
 
 
@@ -447,16 +450,412 @@ private:
     bool isPaused;
 };
 
+class FCFSWindow : public QWidget {
+public:
+    FCFSWindow(QWidget* parent = nullptr)
+        : QWidget(parent), processCount(1), live(false), isPaused(false), scheduler(nullptr) {
+        setWindowTitle("FCFS Scheduling Window");
+
+        mainLayout = new QVBoxLayout(this);
+        QFormLayout* formLayout = new QFormLayout();
+
+        idLabel = new QLabel(QString::number(processCount));
+        burstTimeEdit = new QLineEdit();
+        arrivalTimeEdit = new QLineEdit();
+
+        formLayout->addRow("ID:", idLabel);
+        formLayout->addRow("Burst Time:", burstTimeEdit);
+        formLayout->addRow("Arrival Time:", arrivalTimeEdit);
+        minArrivalTime = 0;
+
+        QPushButton* addButton = new QPushButton("Add Process");
+        connect(addButton, &QPushButton::clicked, this, &FCFSWindow::addProcess);
+
+        liveCheckBox = new QCheckBox("Live");
+        connect(liveCheckBox, &QCheckBox::toggled, this, &FCFSWindow::toggleLive);
+
+        startButton = new QPushButton("Start");
+        connect(startButton, &QPushButton::clicked, this, &FCFSWindow::startScheduling);
+
+        endLiveButton = new QPushButton("End Live");
+        endLiveButton->setEnabled(false);
+        connect(endLiveButton, &QPushButton::clicked, this, &FCFSWindow::endLive);
+
+        pauseResumeButton = nullptr;
+
+        mainLayout->addLayout(formLayout);
+        mainLayout->addWidget(addButton);
+        mainLayout->addWidget(liveCheckBox);
+        mainLayout->addWidget(startButton);
+        mainLayout->addWidget(endLiveButton);
+
+        timer = new QTimer(this);
+        connect(timer, &QTimer::timeout, this, &FCFSWindow::updateArrivalTime);
+    }
+
+    void handleGanttChartUpdate(int pid, int currentTime) {
+        ganttChartWindow->addBlock(pid, currentTime, processes);
+    }
+
+private slots:
+    void addProcess() {
+        QString arrivalText = arrivalTimeEdit->text();
+        QString burstText = burstTimeEdit->text();
+
+        int burstTime = burstText.toInt();
+        int arrivalTime = arrivalText.toInt();
+
+        bool hasError = false;
+
+        if (arrivalText.isEmpty() || arrivalTime < minArrivalTime) {
+            arrivalTimeEdit->setText(QString::number(minArrivalTime));
+            hasError = true;
+        }
+
+        if (burstText.isEmpty() || burstTime < 1) {
+            burstTimeEdit->setText("1");
+            hasError = true;
+        }
+
+        if (hasError)
+            return;
+
+        processes.push_back(Process(processCount, burstTime, 1, arrivalTime)); // Priority set to 1 (not used in FCFS)
+        processCount++;
+
+        idLabel->setText(QString::number(processCount));
+        burstTimeEdit->clear();
+        arrivalTimeEdit->clear();
+    }
+
+    void toggleLive(bool checked) {
+        live = checked;
+        endLiveButton->setEnabled(live);
+    }
+
+    void togglePause() {
+        if (!isPaused) {
+            isPaused = true;
+            pauseResumeButton->setText("Resume");
+
+            if (scheduler) {
+                scheduler->setPaused(true);
+                QMetaObject::invokeMethod(scheduler, "setPaused", Qt::QueuedConnection,
+                                          Q_ARG(bool, true));
+            }
+            timer->stop();
+        } else {
+            isPaused = false;
+            pauseResumeButton->setText("Pause");
+
+            if (scheduler) {
+                scheduler->setPaused(false);
+                QMetaObject::invokeMethod(scheduler, "setPaused", Qt::QueuedConnection,
+                                          Q_ARG(bool, false));
+            }
+            timer->start(800);
+        }
+    }
+
+    void startScheduling() {
+        if (!live) {
+            clearPage();
+        } else {
+            liveCheckBox->hide();
+            startButton->hide();
+            timer->start(800);
+        }
+        ganttChartWindow = new GanttChartWindow();
+        ganttChartWindow->show();
+
+        if (live) {
+            pauseResumeButton = new QPushButton("Pause", this);
+            mainLayout->addWidget(pauseResumeButton);
+            connect(pauseResumeButton, &QPushButton::clicked, this, &FCFSWindow::togglePause);
+        }
+
+        QThread* thread = new QThread;
+        scheduler = new FCFS_Scheduler(processes);
+        scheduler->moveToThread(thread);
+
+        connect(thread, &QThread::started, [this]() {
+            connect(scheduler, &FCFS_Scheduler::updateGanttChart,
+                    this, &FCFSWindow::handleGanttChartUpdate, Qt::QueuedConnection);
+            connect(scheduler, &FCFS_Scheduler::statsCalculated,
+                    ganttChartWindow, &GanttChartWindow::setStats, Qt::QueuedConnection);
+            scheduler->schedule(live);
+        });
+
+        connect(scheduler, &FCFS_Scheduler::finished, thread, &QThread::quit);
+        connect(scheduler, &FCFS_Scheduler::finished, scheduler, &FCFS_Scheduler::deleteLater);
+        connect(thread, &QThread::finished, thread, &QThread::deleteLater);
+
+        thread->start();
+    }
+
+    void updateArrivalTime() {
+        if (scheduler) {
+            minArrivalTime = scheduler->getTim() + 2;
+            arrivalTimeEdit->setText(QString::number(minArrivalTime));
+            arrivalTimeEdit->setValidator(new QIntValidator(minArrivalTime, INT_MAX, this));
+        }
+    }
+
+    void endLive() {
+        live = false;
+        endLiveButton->setEnabled(false);
+        timer->stop();
+        clearPage();
+        if (scheduler) {
+            scheduler->setPaused(false);
+            QMetaObject::invokeMethod(scheduler, "setPaused", Qt::QueuedConnection,
+                                      Q_ARG(bool, false));
+        }
+    }
+
+    void clearPage() {
+        QLayoutItem* item;
+        while ((item = mainLayout->takeAt(0)) != nullptr) {
+            if(item->widget()) {
+                delete item->widget();
+            }
+            delete item;
+        }
+    }
+
+private:
+    QVBoxLayout* mainLayout;
+    QLabel* idLabel;
+    QLineEdit* burstTimeEdit;
+    QLineEdit* arrivalTimeEdit;
+    std::vector<Process> processes;
+    int processCount;
+    QCheckBox* liveCheckBox;
+    QPushButton* startButton;
+    QPushButton* endLiveButton;
+    QPushButton* pauseResumeButton;
+    bool live;
+    bool isPaused;
+    int minArrivalTime;
+    QTimer* timer;
+    FCFS_Scheduler* scheduler;
+    GanttChartWindow* ganttChartWindow;
+};
+
+class RoundRobinWindow : public QWidget {
+public:
+    RoundRobinWindow(QWidget* parent = nullptr)
+        : QWidget(parent), processCount(1), live(false), isPaused(false), scheduler(nullptr), timeQuantum(2) {
+        setWindowTitle("Round Robin Window");
+
+        mainLayout = new QVBoxLayout(this);
+        QFormLayout* formLayout = new QFormLayout();
+
+        idLabel = new QLabel(QString::number(processCount));
+        burstTimeEdit = new QLineEdit();
+        arrivalTimeEdit = new QLineEdit();
+        quantumEdit = new QLineEdit();
+        quantumEdit->setText("2"); // Default time quantum
+
+        formLayout->addRow("ID:", idLabel);
+        formLayout->addRow("Burst Time:", burstTimeEdit);
+        formLayout->addRow("Arrival Time:", arrivalTimeEdit);
+        formLayout->addRow("Time Quantum:", quantumEdit);
+        minArrivalTime = 0;
+
+        QPushButton* addButton = new QPushButton("Add Process");
+        connect(addButton, &QPushButton::clicked, this, &RoundRobinWindow::addProcess);
+
+        liveCheckBox = new QCheckBox("Live");
+        connect(liveCheckBox, &QCheckBox::toggled, this, &RoundRobinWindow::toggleLive);
+
+        startButton = new QPushButton("Start");
+        connect(startButton, &QPushButton::clicked, this, &RoundRobinWindow::startScheduling);
+
+        endLiveButton = new QPushButton("End Live");
+        endLiveButton->setEnabled(false);
+        connect(endLiveButton, &QPushButton::clicked, this, &RoundRobinWindow::endLive);
+
+        pauseResumeButton = nullptr;
+
+        mainLayout->addLayout(formLayout);
+        mainLayout->addWidget(addButton);
+        mainLayout->addWidget(liveCheckBox);
+        mainLayout->addWidget(startButton);
+        mainLayout->addWidget(endLiveButton);
+
+        timer = new QTimer(this);
+        connect(timer, &QTimer::timeout, this, &RoundRobinWindow::updateArrivalTime);
+    }
+
+    void handleGanttChartUpdate(int pid, int currentTime) {
+        ganttChartWindow->addBlock(pid, currentTime, processes);
+    }
+
+private slots:
+    void addProcess() {
+        QString arrivalText = arrivalTimeEdit->text();
+        QString burstText = burstTimeEdit->text();
+        QString quantumText = quantumEdit->text();
+
+        int burstTime = burstText.toInt();
+        int arrivalTime = arrivalText.toInt();
+        timeQuantum = quantumText.toInt();
+
+        bool hasError = false;
+
+        if (arrivalText.isEmpty() || arrivalTime < minArrivalTime) {
+            arrivalTimeEdit->setText(QString::number(minArrivalTime));
+            hasError = true;
+        }
+
+        if (burstText.isEmpty() || burstTime < 1) {
+            burstTimeEdit->setText("1");
+            hasError = true;
+        }
+
+        if (quantumText.isEmpty() || timeQuantum < 1) {
+            quantumEdit->setText("1");
+            hasError = true;
+        }
+
+        if (hasError)
+            return;
+
+        processes.push_back(Process(processCount, burstTime, 1, arrivalTime)); // Priority set to 1 (not used in RR)
+        processCount++;
+
+        idLabel->setText(QString::number(processCount));
+        burstTimeEdit->clear();
+        arrivalTimeEdit->clear();
+    }
+
+    void toggleLive(bool checked) {
+        live = checked;
+        endLiveButton->setEnabled(live);
+    }
+
+    void togglePause() {
+        if (!isPaused) {
+            isPaused = true;
+            pauseResumeButton->setText("Resume");
+
+            if (scheduler) {
+                scheduler->setPaused(true);
+                QMetaObject::invokeMethod(scheduler, "setPaused", Qt::QueuedConnection,
+                                          Q_ARG(bool, true));
+            }
+            timer->stop();
+        } else {
+            isPaused = false;
+            pauseResumeButton->setText("Pause");
+
+            if (scheduler) {
+                scheduler->setPaused(false);
+                QMetaObject::invokeMethod(scheduler, "setPaused", Qt::QueuedConnection,
+                                          Q_ARG(bool, false));
+            }
+            timer->start(800);
+        }
+    }
+
+    void startScheduling() {
+        if (!live) {
+            clearPage();
+        } else {
+            liveCheckBox->hide();
+            startButton->hide();
+            timer->start(800);
+        }
+        ganttChartWindow = new GanttChartWindow();
+        ganttChartWindow->show();
+
+        if (live) {
+            pauseResumeButton = new QPushButton("Pause", this);
+            mainLayout->addWidget(pauseResumeButton);
+            connect(pauseResumeButton, &QPushButton::clicked, this, &RoundRobinWindow::togglePause);
+        }
+
+        QThread* thread = new QThread;
+        scheduler = new RoundRobinScheduler(timeQuantum, processes);
+        scheduler->moveToThread(thread);
+
+        connect(thread, &QThread::started, [this]() {
+            connect(scheduler, &RoundRobinScheduler::updateGanttChart,
+                    this, &RoundRobinWindow::handleGanttChartUpdate, Qt::QueuedConnection);
+            connect(scheduler, &RoundRobinScheduler::statsCalculated,
+                    ganttChartWindow, &GanttChartWindow::setStats, Qt::QueuedConnection);
+            scheduler->schedule(live);
+        });
+
+        connect(scheduler, &RoundRobinScheduler::finished, thread, &QThread::quit);
+        connect(scheduler, &RoundRobinScheduler::finished, scheduler, &RoundRobinScheduler::deleteLater);
+        connect(thread, &QThread::finished, thread, &QThread::deleteLater);
+
+        thread->start();
+    }
+
+    void updateArrivalTime() {
+        if (scheduler) {
+            minArrivalTime = scheduler->getTim() + 2;
+            arrivalTimeEdit->setText(QString::number(minArrivalTime));
+            arrivalTimeEdit->setValidator(new QIntValidator(minArrivalTime, INT_MAX, this));
+        }
+    }
+
+    void endLive() {
+        live = false;
+        endLiveButton->setEnabled(false);
+        timer->stop();
+        clearPage();
+        if (scheduler) {
+            scheduler->setPaused(false);
+            QMetaObject::invokeMethod(scheduler, "setPaused", Qt::QueuedConnection,
+                                      Q_ARG(bool, false));
+        }
+    }
+
+    void clearPage() {
+        QLayoutItem* item;
+        while ((item = mainLayout->takeAt(0)) != nullptr) {
+            if(item->widget()) {
+                delete item->widget();
+            }
+            delete item;
+        }
+    }
+
+private:
+    QVBoxLayout* mainLayout;
+    QLabel* idLabel;
+    QLineEdit* burstTimeEdit;
+    QLineEdit* arrivalTimeEdit;
+    QLineEdit* quantumEdit;
+    std::vector<Process> processes;
+    int processCount;
+    int timeQuantum;
+    QCheckBox* liveCheckBox;
+    QPushButton* startButton;
+    QPushButton* endLiveButton;
+    QPushButton* pauseResumeButton;
+    bool live;
+    bool isPaused;
+    int minArrivalTime;
+    QTimer* timer;
+    RoundRobinScheduler* scheduler;
+    GanttChartWindow* ganttChartWindow;
+};
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::openNewWindow);
-
     ui->comboBox->addItem("Preemptive Priority");
     ui->comboBox->addItem("NonPreemptive Priority");
+    ui->comboBox->addItem("First-Come-First-Served");
+    ui->comboBox->addItem("Round Robin");
 }
 
 MainWindow::~MainWindow()
@@ -469,17 +868,16 @@ void MainWindow::openNewWindow()
     QString selectedOption = ui->comboBox->currentText();
 
     if (selectedOption == "Preemptive Priority") {
-        // GanttChartWindow* g = new GanttChartWindow();
-        // g->show();
-        // g->addBlock(0,1);
-        // g->addBlock(0,2);
-        // g->addBlock(0,2);
-        // g->addBlock(0,2);
-        // g->addBlock(0,2);
         PreemptiveWindow* newWindow = new PreemptiveWindow();
         newWindow->show();
     } else if (selectedOption == "NonPreemptive Priority") {
-         NonPreemptiveWindow* newWindow = new NonPreemptiveWindow();
+        NonPreemptiveWindow* newWindow = new NonPreemptiveWindow();
+        newWindow->show();
+    } else if (selectedOption == "First-Come-First-Served") {
+        FCFSWindow* newWindow = new FCFSWindow();
+        newWindow->show();
+    } else if (selectedOption == "Round Robin") {
+        RoundRobinWindow* newWindow = new RoundRobinWindow();
         newWindow->show();
     }
 }
