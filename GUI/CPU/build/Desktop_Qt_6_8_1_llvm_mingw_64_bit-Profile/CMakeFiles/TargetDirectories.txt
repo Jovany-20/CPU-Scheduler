@@ -1,0 +1,9 @@
+C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CMakeFiles/CPU.dir
+C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CMakeFiles/edit_cache.dir
+C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CMakeFiles/rebuild_cache.dir
+C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CMakeFiles/list_install_components.dir
+C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CMakeFiles/install.dir
+C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CMakeFiles/install/local.dir
+C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CMakeFiles/install/strip.dir
+C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CMakeFiles/CPU_autogen_timestamp_deps.dir
+C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CMakeFiles/CPU_autogen.dir

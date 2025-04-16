@@ -32,6 +32,10 @@ qt_add_executable(CPU
     FCFS_Scheduler.h
     RoundRobinScheduler.h
     RoundRobinScheduler.cpp
+    SJFNonPreemptiveScheduler.h
+    SJFNonPreemptiveScheduler.cpp
+    SJFPreemptiveScheduler.h
+    SJFPreemptiveScheduler.cpp
 )
 
 target_link_libraries(CPU

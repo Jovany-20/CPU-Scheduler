@@ -1,0 +1,49 @@
+# ninja log v6
+58	463	7665215017513041	CPU_autogen/timestamp	4263c56d14fbd8e0
+3423	9508	7665153388004202	CMakeFiles/CPU.dir/main.cpp.obj	cab8ffa397573fd4
+7701	12268	7665198023291216	CMakeFiles/CPU.dir/CPU_autogen/mocs_compilation.cpp.obj	de91050245727da
+58	463	7665215017513041	CPU_autogen/mocs_compilation.cpp	4263c56d14fbd8e0
+58	463	7665215017513041	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CPU_autogen/timestamp	4263c56d14fbd8e0
+58	463	7665215017513041	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CPU_autogen/mocs_compilation.cpp	4263c56d14fbd8e0
+3459	5742	7665153388378149	CMakeFiles/CPU.dir/Process.cpp.obj	8fed4671324bbd2e
+3487	10165	7665153388651496	CMakeFiles/CPU.dir/FCFS_Scheduler.cpp.obj	975e8d0579924dd4
+3497	9948	7665153388749365	CMakeFiles/CPU.dir/RoundRobinScheduler.cpp.obj	840b117768a579c0
+7718	11690	7665198023470779	CMakeFiles/CPU.dir/SchedulerWorker.cpp.obj	73d6ed2dac9333d7
+3470	10848	7665153388483732	CMakeFiles/CPU.dir/GanttChartWindow.cpp.obj	616c699531b101b0
+7709	11790	7665198023386505	CMakeFiles/CPU.dir/NonPreemptivePriorityScheduler.cpp.obj	9f81719fa9919cae
+7714	11971	7665198023425967	CMakeFiles/CPU.dir/PreemptivePriorityScheduler.cpp.obj	9ad8544716f0c34f
+465	4034	7665215021577304	CMakeFiles/CPU.dir/mainwindow.cpp.obj	f241c93c8892a75a
+4034	4184	7665215057262932	CPU.exe	b50f5f98247c0948
+470	3064	7665215021627958	CMakeFiles/CPU.dir/SJFNonPreemptiveScheduler.cpp.obj	51988a82d54aa48c
+83	1456	7665227710015712	CPU_autogen/timestamp	4263c56d14fbd8e0
+83	1456	7665227710015712	CPU_autogen/mocs_compilation.cpp	4263c56d14fbd8e0
+83	1456	7665227710015712	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CPU_autogen/timestamp	4263c56d14fbd8e0
+83	1456	7665227710015712	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CPU_autogen/mocs_compilation.cpp	4263c56d14fbd8e0
+1469	4492	7665227711453622	CMakeFiles/CPU.dir/SJFPreemptiveScheduler.cpp.obj	4e084c43e2216ad4
+1460	4573	7665227711352145	CMakeFiles/CPU.dir/CPU_autogen/mocs_compilation.cpp.obj	de91050245727da
+90	546	7665227888387770	CPU_autogen/timestamp	4263c56d14fbd8e0
+90	546	7665227888387770	CPU_autogen/mocs_compilation.cpp	4263c56d14fbd8e0
+90	546	7665227888387770	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CPU_autogen/timestamp	4263c56d14fbd8e0
+90	546	7665227888387770	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CPU_autogen/mocs_compilation.cpp	4263c56d14fbd8e0
+549	4175	7665227892965201	CMakeFiles/CPU.dir/mainwindow.cpp.obj	f241c93c8892a75a
+4175	4439	7665227929233576	CPU.exe	c5232b94abea4b90
+98	563	7665228331859802	CPU_autogen/timestamp	4263c56d14fbd8e0
+98	563	7665228331859802	CPU_autogen/mocs_compilation.cpp	4263c56d14fbd8e0
+98	563	7665228331859802	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CPU_autogen/timestamp	4263c56d14fbd8e0
+98	563	7665228331859802	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CPU_autogen/mocs_compilation.cpp	4263c56d14fbd8e0
+565	4722	7665228336532495	CMakeFiles/CPU.dir/mainwindow.cpp.obj	f241c93c8892a75a
+4722	4869	7665228378097401	CPU.exe	c5232b94abea4b90
+64	523	7665236819675651	CPU_autogen/timestamp	4263c56d14fbd8e0
+64	523	7665236819675651	CPU_autogen/mocs_compilation.cpp	4263c56d14fbd8e0
+64	523	7665236819675651	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CPU_autogen/timestamp	4263c56d14fbd8e0
+64	523	7665236819675651	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CPU_autogen/mocs_compilation.cpp	4263c56d14fbd8e0
+530	2538	7665236824332908	CMakeFiles/CPU.dir/RoundRobinScheduler.cpp.obj	840b117768a579c0
+526	4251	7665236824283506	CMakeFiles/CPU.dir/mainwindow.cpp.obj	f241c93c8892a75a
+4251	4387	7665236861532773	CPU.exe	c5232b94abea4b90
+59	483	7665239776675949	CPU_autogen/timestamp	4263c56d14fbd8e0
+59	483	7665239776675949	CPU_autogen/mocs_compilation.cpp	4263c56d14fbd8e0
+59	483	7665239776675949	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CPU_autogen/timestamp	4263c56d14fbd8e0
+59	483	7665239776675949	C:/Users/vanyj/OneDrive - Faculty of Engineering Ain Shams University/Desktop/os/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_8_1_llvm_mingw_64_bit-Profile/CPU_autogen/mocs_compilation.cpp	4263c56d14fbd8e0
+490	2631	7665239780992888	CMakeFiles/CPU.dir/FCFS_Scheduler.cpp.obj	975e8d0579924dd4
+485	4260	7665239780943646	CMakeFiles/CPU.dir/mainwindow.cpp.obj	f241c93c8892a75a
+4260	4396	7665239818688915	CPU.exe	c5232b94abea4b90
