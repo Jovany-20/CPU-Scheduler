@@ -17,9 +17,9 @@ GanttChartWindow::GanttChartWindow(QWidget* parent) : QWidget(parent) {
     // Remove any margins so blocks touch each other.
     layout->setContentsMargins(0, 0, 0, 0);
     container->setLayout(layout);
-
+    layout->setSizeConstraint(QLayout::SetFixedSize);
     scrollArea = new QScrollArea(this);
-    scrollArea->setWidgetResizable(true);
+    scrollArea->setWidgetResizable(false);
     scrollArea->setWidget(container);
     scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
@@ -75,7 +75,7 @@ void GanttChartWindow::addBlock(int pid, int startTime, std::vector<Process>& pr
     QLabel* timeLabel = new QLabel(QString::number(startTime), this);
     timeLabel->setAlignment(Qt::AlignLeft);
     timeLabel->setFixedWidth(fixedBlockWidth);
-
+    //timeLabel->setFixedHeight(300);
     blockLayout->addWidget(block);
     blockLayout->addWidget(timeLabel);
 
