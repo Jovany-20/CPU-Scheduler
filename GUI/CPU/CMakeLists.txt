@@ -37,7 +37,26 @@ qt_add_executable(CPU
     SJFPreemptiveScheduler.h
     SJFPreemptiveScheduler.cpp
 )
+if(WIN32)
+    set(APP_ICON_PATH "${CMAKE_CURRENT_SOURCE_DIR}/resources/appicon.ico")
 
+    # Verify the icon exists (critical for debugging)
+    if(NOT EXISTS "${APP_ICON_PATH}")
+        message(FATAL_ERROR "Icon file missing at: ${APP_ICON_PATH}")
+    else()
+        message(STATUS "Using icon: ${APP_ICON_PATH}")  # Log success
+    endif()
+
+    # Method 1: Set icon directly (works for most cases)
+    set_target_properties(CPU PROPERTIES
+        RC_ICONS "${APP_ICON_PATH}"
+        WIN32_EXECUTABLE TRUE
+    )
+
+    # Method 2: Alternative .rc file approach (more reliable)
+    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/app.rc" "IDI_ICON1 ICON \"${APP_ICON_PATH}\"")
+    target_sources(CPU PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/app.rc")
+endif()
 target_link_libraries(CPU
     PRIVATE
         Qt6::Core

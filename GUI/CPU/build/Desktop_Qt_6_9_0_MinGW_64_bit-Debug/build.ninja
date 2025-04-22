@@ -129,6 +129,29 @@ build CMakeFiles/CPU.dir/RoundRobinScheduler.cpp.obj: CXX_COMPILER__CPU_unscanne
   OBJECT_DIR = CMakeFiles\CPU.dir
   OBJECT_FILE_DIR = CMakeFiles\CPU.dir
 
+build CMakeFiles/CPU.dir/SJFNonPreemptiveScheduler.cpp.obj: CXX_COMPILER__CPU_unscanned_Debug C$:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/SJFNonPreemptiveScheduler.cpp || cmake_object_order_depends_target_CPU
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\CPU.dir\SJFNonPreemptiveScheduler.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CPU_autogen/include -isystem C:/Qt/6.9.0/mingw_64/include/QtCore -isystem C:/Qt/6.9.0/mingw_64/include -isystem C:/Qt/6.9.0/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.9.0/mingw_64/include/QtWidgets -isystem C:/Qt/6.9.0/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\CPU.dir
+  OBJECT_FILE_DIR = CMakeFiles\CPU.dir
+
+build CMakeFiles/CPU.dir/SJFPreemptiveScheduler.cpp.obj: CXX_COMPILER__CPU_unscanned_Debug C$:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/SJFPreemptiveScheduler.cpp || cmake_object_order_depends_target_CPU
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\CPU.dir\SJFPreemptiveScheduler.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CPU_autogen/include -isystem C:/Qt/6.9.0/mingw_64/include/QtCore -isystem C:/Qt/6.9.0/mingw_64/include -isystem C:/Qt/6.9.0/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.9.0/mingw_64/include/QtWidgets -isystem C:/Qt/6.9.0/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\CPU.dir
+  OBJECT_FILE_DIR = CMakeFiles\CPU.dir
+
+build CMakeFiles/CPU.dir/app.rc.obj: RC_COMPILER__CPU_unscanned_Debug C$:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/app.rc || cmake_object_order_depends_target_CPU
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\CPU.dir\app.rc.obj.d
+  INCLUDES = -I C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CPU_autogen/include -I C:/Qt/6.9.0/mingw_64/include/QtCore -I C:/Qt/6.9.0/mingw_64/include -I C:/Qt/6.9.0/mingw_64/mkspecs/win32-g++ -I C:/Qt/6.9.0/mingw_64/include/QtWidgets -I C:/Qt/6.9.0/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\CPU.dir
+  OBJECT_FILE_DIR = CMakeFiles\CPU.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target CPU
@@ -137,7 +160,7 @@ build CMakeFiles/CPU.dir/RoundRobinScheduler.cpp.obj: CXX_COMPILER__CPU_unscanne
 #############################################
 # Link the executable CPU.exe
 
-build CPU.exe: CXX_EXECUTABLE_LINKER__CPU_Debug CMakeFiles/CPU.dir/CPU_autogen/mocs_compilation.cpp.obj CMakeFiles/CPU.dir/main.cpp.obj CMakeFiles/CPU.dir/mainwindow.cpp.obj CMakeFiles/CPU.dir/NonPreemptivePriorityScheduler.cpp.obj CMakeFiles/CPU.dir/PreemptivePriorityScheduler.cpp.obj CMakeFiles/CPU.dir/Process.cpp.obj CMakeFiles/CPU.dir/GanttChartWindow.cpp.obj CMakeFiles/CPU.dir/SchedulerWorker.cpp.obj CMakeFiles/CPU.dir/FCFS_Scheduler.cpp.obj CMakeFiles/CPU.dir/RoundRobinScheduler.cpp.obj | C$:/Qt/6.9.0/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.9.0/mingw_64/lib/libQt6Gui.a C$:/Qt/6.9.0/mingw_64/lib/libQt6Core.a C$:/Qt/6.9.0/mingw_64/lib/libQt6EntryPoint.a || CPU_autogen CPU_autogen_timestamp_deps
+build CPU.exe: CXX_EXECUTABLE_LINKER__CPU_Debug CMakeFiles/CPU.dir/CPU_autogen/mocs_compilation.cpp.obj CMakeFiles/CPU.dir/main.cpp.obj CMakeFiles/CPU.dir/mainwindow.cpp.obj CMakeFiles/CPU.dir/NonPreemptivePriorityScheduler.cpp.obj CMakeFiles/CPU.dir/PreemptivePriorityScheduler.cpp.obj CMakeFiles/CPU.dir/Process.cpp.obj CMakeFiles/CPU.dir/GanttChartWindow.cpp.obj CMakeFiles/CPU.dir/SchedulerWorker.cpp.obj CMakeFiles/CPU.dir/FCFS_Scheduler.cpp.obj CMakeFiles/CPU.dir/RoundRobinScheduler.cpp.obj CMakeFiles/CPU.dir/SJFNonPreemptiveScheduler.cpp.obj CMakeFiles/CPU.dir/SJFPreemptiveScheduler.cpp.obj CMakeFiles/CPU.dir/app.rc.obj | C$:/Qt/6.9.0/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.9.0/mingw_64/lib/libQt6Gui.a C$:/Qt/6.9.0/mingw_64/lib/libQt6Core.a C$:/Qt/6.9.0/mingw_64/lib/libQt6EntryPoint.a || CPU_autogen CPU_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g
   LINK_FLAGS = -mwindows
   LINK_LIBRARIES = C:/Qt/6.9.0/mingw_64/lib/libQt6Widgets.a  C:/Qt/6.9.0/mingw_64/lib/libQt6Gui.a  C:/Qt/6.9.0/mingw_64/lib/libQt6Core.a  -lmpr  -luserenv  -lmingw32  C:/Qt/6.9.0/mingw_64/lib/libQt6EntryPoint.a  -lshell32  -ld3d11  -ldxgi  -ldxguid  -ld3d12  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32

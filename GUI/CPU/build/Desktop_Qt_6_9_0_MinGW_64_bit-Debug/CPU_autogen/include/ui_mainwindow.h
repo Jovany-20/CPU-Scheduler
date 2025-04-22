@@ -38,7 +38,7 @@ public:
         centralwidget->setObjectName("centralwidget");
         comboBox = new QComboBox(centralwidget);
         comboBox->setObjectName("comboBox");
-        comboBox->setGeometry(QRect(110, 80, 181, 21));
+        comboBox->setGeometry(QRect(80, 80, 251, 21));
         pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName("pushButton");
         pushButton->setGeometry(QRect(160, 120, 80, 18));
