@@ -660,6 +660,10 @@ CPU_autogen/timestamp: \
 	C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/Process.h \
 	C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/RoundRobinScheduler.cpp \
 	C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/RoundRobinScheduler.h \
+	C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/SJFNonPreemptiveScheduler.cpp \
+	C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/SJFNonPreemptiveScheduler.h \
+	C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/SJFPreemptiveScheduler.cpp \
+	C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/SJFPreemptiveScheduler.h \
 	C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/SchedulerWorker.cpp \
 	C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/SchedulerWorker.h \
 	C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/.qtc/package-manager/auto-setup.cmake \

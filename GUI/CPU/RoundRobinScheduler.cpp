@@ -9,7 +9,7 @@ RoundRobinScheduler::RoundRobinScheduler(int quantum, std::vector<Process>& proc
 
 void RoundRobinScheduler::schedule(bool& live) {
     int n = processes.size();
-    std::queue<Process> readyQueue;
+    std::queue<Process*> readyQueue;
     int currentTime = 0;
     int completed = 0;
     int totalWaitingTime = 0;
@@ -29,20 +29,20 @@ void RoundRobinScheduler::schedule(bool& live) {
 
         for (auto& proc : processes) {
             if (proc.getArrivalTime() == currentTime && proc.getRemainingTime() > 0 && !isInQueue[proc.getPid()]) {
-                readyQueue.push(proc);
+                readyQueue.push(&proc);
                 isInQueue[proc.getPid()] = true;
             }
         }
 
         if (!readyQueue.empty()) {
-            Process currentProcess = readyQueue.front();
+            Process* currentProcess = readyQueue.front();
             readyQueue.pop();
 
-            if (currentProcess.getStartTime() == -1) {
-                currentProcess.setStartTime(currentTime);
+            if (currentProcess->getStartTime() == -1) {
+                currentProcess->setStartTime(currentTime);
             }
 
-            int slice = std::min(timeQuantum, currentProcess.getRemainingTime());
+            int slice = std::min(timeQuantum, currentProcess->getRemainingTime());
 
             for (int t = 0; t < slice; t++) {
                 // Pause handling
@@ -53,30 +53,30 @@ void RoundRobinScheduler::schedule(bool& live) {
                     }
                 }
 
-                emit updateGanttChart(currentProcess.getPid(), currentTime);
+                emit updateGanttChart(currentProcess->getPid(), currentTime);
                 if (live) QThread::sleep(1);
                 currentTime++;
                 tim = currentTime;
 
-                currentProcess.setRemainingTime(currentProcess.getRemainingTime() - 1);
+                currentProcess->setRemainingTime(currentProcess->getRemainingTime() - 1);
 
                 for (auto& proc : processes) {
                     if (proc.getArrivalTime() == currentTime && proc.getRemainingTime() > 0 && !isInQueue[proc.getPid()]) {
-                        readyQueue.push(proc);
+                        readyQueue.push(&proc);
                         isInQueue[proc.getPid()] = true;
                     }
                 }
 
-                if (currentProcess.getRemainingTime() == 0) {
-                    currentProcess.setCompletionTime(currentTime);
+                if (currentProcess->getRemainingTime() == 0) {
+                    currentProcess->setCompletionTime(currentTime);
                     completed++;
-                    totalWaitingTime += currentProcess.calcWaitingTime();
-                    totalTurnaroundTime += currentProcess.calcTurnaroundTime();
+                    totalWaitingTime += currentProcess->calcWaitingTime();
+                    totalTurnaroundTime += currentProcess->calcTurnaroundTime();
                     break;
                 }
             }
 
-            if (currentProcess.getRemainingTime() > 0) {
+            if (currentProcess->getRemainingTime() > 0) {
                 readyQueue.push(currentProcess);
             }
 

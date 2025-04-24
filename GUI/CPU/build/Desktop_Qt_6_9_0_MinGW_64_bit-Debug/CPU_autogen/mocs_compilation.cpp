@@ -4,5 +4,7 @@
 #include "EWIEGA46WW/moc_NonPreemptivePriorityScheduler.cpp"
 #include "EWIEGA46WW/moc_PreemptivePriorityScheduler.cpp"
 #include "EWIEGA46WW/moc_RoundRobinScheduler.cpp"
+#include "EWIEGA46WW/moc_SJFNonPreemptiveScheduler.cpp"
+#include "EWIEGA46WW/moc_SJFPreemptiveScheduler.cpp"
 #include "EWIEGA46WW/moc_SchedulerWorker.cpp"
 #include "EWIEGA46WW/moc_mainwindow.cpp"

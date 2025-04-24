@@ -332,6 +332,18 @@
 			null
 		],
 		[
+			"C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/SJFNonPreemptiveScheduler.h",
+			"MU",
+			"EWIEGA46WW/moc_SJFNonPreemptiveScheduler.cpp",
+			null
+		],
+		[
+			"C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/SJFPreemptiveScheduler.h",
+			"MU",
+			"EWIEGA46WW/moc_SJFPreemptiveScheduler.cpp",
+			null
+		],
+		[
 			"C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/SchedulerWorker.h",
 			"MU",
 			"EWIEGA46WW/moc_SchedulerWorker.cpp",
@@ -447,6 +459,16 @@
 		],
 		[
 			"C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/RoundRobinScheduler.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/SJFNonPreemptiveScheduler.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/johnh/OneDrive/Documents/CPU-Scheduler/GUI/CPU/SJFPreemptiveScheduler.cpp",
 			"MU",
 			null
 		],

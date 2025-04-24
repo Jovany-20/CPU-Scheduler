@@ -26,7 +26,7 @@ private:
     QScrollArea* scrollArea;   // Scrollable area for the gantt chart blocks
     QLabel* statsLabel;        // Label for printing the statistics
     QTableWidget* processTable; // Table to display process remaining times
-    const int fixedBlockWidth = 300; // Fixed width for each block
+    const int fixedBlockWidth = 30; // Fixed width for each block
 };
 
 #endif // GANTTCHARTWINDOW_H

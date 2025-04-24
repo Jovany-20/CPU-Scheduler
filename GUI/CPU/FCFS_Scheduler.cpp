@@ -55,7 +55,7 @@ void FCFS_Scheduler::schedule(bool& live) {
                         pauseCond.wait(&mutex);
                     }
                 }
-
+                process.decrement(1);
                 emit updateGanttChart(process.getPid(), tim);
                 if (live) QThread::sleep(1);
                 tim++;
@@ -69,7 +69,7 @@ void FCFS_Scheduler::schedule(bool& live) {
             }
 
             process.setCompletionTime(tim);
-            process.setRemainingTime(0);
+
             process.setLastProcessedTime(tim);
             totalWaitingTime += process.calcWaitingTime();
             totalTurnaroundTime += process.calcTurnaroundTime();
